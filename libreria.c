@@ -6,9 +6,11 @@
 int head(int N) {
     for (int i = 0; i < N; i++) {
         char line[100];
-        if (fgets(line, sizeof(line), stdin) == NULL)
+        if (fgets(line, sizeof(line), stdin) != NULL) {
+            fputs(line, stdout);
+        } else {
             break;
-        fgets(line, sizeof(line), stdin);
-        fputs(line, stdout);
+        }
     }
+    return 0;
 }

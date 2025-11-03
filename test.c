@@ -24,12 +24,13 @@ int main(int argc, char *argv[]) {
     }
     if (strcmp(argv[1], "-head") == 0) {
         head(N);
-    } else if (strcmp(argv[1], "-tail") == 0) {
+    } /*else if (strcmp(argv[1], "-tail") == 0) {
         tail(N);
     }
     else if (strcmp(argv[1], "-long") == 0) {
         longlines(N);
-    } else {
+    } */
+    else {
         fprintf(stderr, "Error: Funcion '%s' desconocida.\n", argv[1]);
         return 1;
     }
