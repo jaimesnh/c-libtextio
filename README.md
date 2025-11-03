@@ -1,2 +1,34 @@
-# c-libtextio
-A simple C library for text stream processing that implements custom versions of the UNIX head, tail, and longlines commands. It allows printing the first, last, or longest N lines from the standard input. Includes a test program for validation and demonstration.
+# liblineutils
+
+A simple C library for text stream processing that provides three functions similar to the UNIX commands `head`, `tail`, and `longlines`.  
+This project is part of the **Operating Systems** course — *Software Engineering Degree, 2025–26*.
+
+---
+
+## 📄 Description
+
+This library allows you to read text from the standard input and display:
+- The **first N lines** (`head`)
+- The **last N lines** (`tail`)
+- The **N longest lines** (`longlines`)
+
+It is designed as a reusable C library (`.a` or `.so`) and includes a test program to verify and demonstrate its functionality.
+
+---
+
+## ⚙️ Functions
+
+### `int head(int N)`
+Prints the first **N** lines from the standard input to the standard output.
+
+### `int tail(int N)`
+Prints the last **N** lines from the standard input to the standard output.
+
+### `int longlines(int N)`
+Prints the **N longest lines** (from longest to shortest) read from the standard input.
+
+All functions return `0` on success and `-1` on error.
+
+---
+
+## 🧩 File Structure
