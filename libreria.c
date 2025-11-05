@@ -3,9 +3,11 @@
 #include <string.h>
 #include "libreria.h"
 
+#include <time.h>
+
 int head(int N) {
     for (int i = 0; i < N; i++) {
-        char line[100];
+        char line[1024];
         if (fgets(line, sizeof(line), stdin) != NULL) {
             fputs(line, stdout);
         } else {
@@ -45,4 +47,53 @@ int tail(int N){
     }
     free(lines);
     return 0;
+}
+
+int longlines(int N) {
+    char **lines = NULL;
+    int *lengths = NULL;
+    int count = 0;
+    char line[1024];
+    while (fgets(line, sizeof(line), stdin) != NULL) {
+        char *copy = strdup(line);
+
+        char **tmp_lines = realloc(lines, (count+1)*sizeof(char *));
+        int *tmp_lengths = realloc(lengths, (count+1)*sizeof(int));
+
+        lines = tmp_lines;
+        lengths = tmp_lengths;
+        lines[count] = copy;
+        lengths[count] = strlen(copy);
+        count++;
+    }
+
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = i + 1; j < count; j++) {
+            if (lengths[j] > lengths[i]) {
+                int temp_len = lengths[i];
+                lengths[i] = lengths[j];
+                lengths[j] = temp_len;
+                char *temp_line = lines[i];
+                lines[i] = lines[j];
+                lines[j] = temp_line;
+            }
+        }
+    }
+
+    int total = N;
+    if (count < N) {
+        total = count;
+    }
+
+    for(int i = 0; i < total; i++) {
+        fputs(lines[i], stdout);
+        free(lines[i]);
+    }
+    for (int i = total; i < count; i++) {
+        free(lines[i]);
+    }
+    free(lines);
+    free(lengths);
+    return 0;
+    
 }
