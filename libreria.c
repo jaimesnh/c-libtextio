@@ -28,6 +28,11 @@ int tail(int N){
         int position = count % N;
         free(lines[position]);
         lines[position] = strdup(line);
+        if (lines[position] == NULL) {
+            fprintf(stderr, "Error al reservar la memoria\n");
+            free(lines);
+            return 1;
+        }
         count ++;
     }
 
@@ -56,6 +61,12 @@ int longlines(int N) {
     char line[1024];
     while (fgets(line, sizeof(line), stdin) != NULL) {
         char *copy = strdup(line);
+        if (copy == NULL) {
+            fprintf(stderr, "Error al reservar la memoria\n");
+            free(lines);
+            free(lengths);
+            return 1;
+        }
 
         char **tmp_lines = realloc(lines, (count+1)*sizeof(char *));
         int *tmp_lengths = realloc(lengths, (count+1)*sizeof(int));
@@ -67,33 +78,37 @@ int longlines(int N) {
         count++;
     }
 
-    for (int i = 0; i < count - 1; i++) {
-        for (int j = i + 1; j < count; j++) {
-            if (lengths[j] > lengths[i]) {
-                int temp_len = lengths[i];
-                lengths[i] = lengths[j];
-                lengths[j] = temp_len;
-                char *temp_line = lines[i];
-                lines[i] = lines[j];
-                lines[j] = temp_line;
+    if (lines != NULL && lengths != NULL) {
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = i + 1; j < count; j++) {
+                if (lengths[j] > lengths[i]) {
+                    int temp_len = lengths[i];
+                    lengths[i] = lengths[j];
+                    lengths[j] = temp_len;
+                    char *temp_line = lines[i];
+                    lines[i] = lines[j];
+                    lines[j] = temp_line;
+                }
             }
         }
-    }
 
-    int total = N;
-    if (count < N) {
-        total = count;
-    }
 
-    for(int i = 0; i < total; i++) {
-        fputs(lines[i], stdout);
-        free(lines[i]);
+
+        int total = N;
+        if (count < N) {
+            total = count;
+        }
+
+        for(int i = 0; i < total; i++) {
+            fputs(lines[i], stdout);
+            free(lines[i]);
+        }
+        for (int i = total; i < count; i++) {
+            free(lines[i]);
+        }
+        free(lines);
+        free(lengths);
     }
-    for (int i = total; i < count; i++) {
-        free(lines[i]);
-    }
-    free(lines);
-    free(lengths);
     return 0;
     
 }
