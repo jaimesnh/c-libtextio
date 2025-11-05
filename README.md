@@ -8,6 +8,7 @@ This project is part of the **Operating Systems** course — *Software Engineeri
 ## 🧑‍💻 Authors
 
 Iván Pina Brox: @ivannpinna
+
 Jaime Sánchez Vázquez: @jaimesnh
 
 ---
@@ -41,6 +42,9 @@ All functions return `0` on success and `-1` on error.
 ## 🧩 File Structure
 
 ├── libreria.c          # Implementación de las funciones: head, tail, longlines, etc.
+
 ├── libreria.h          # Cabecera con los prototipos de las funciones
+
 ├── test.c              # Programa principal: lee argumentos (-head, -tail, -longlines)
+
 └── compile.sh          # Script de compilación y generación de la librería estática
